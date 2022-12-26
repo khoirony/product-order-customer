@@ -21,7 +21,9 @@ const sequelize = new Sequelize(
 
 const db = {};
 
+// inisiasi dependency sequelize
 db.Sequelize = Sequelize;
+// connection db
 db.sequelize = sequelize;
 
 db.user = require(
@@ -30,19 +32,36 @@ db.user = require(
 db.role = require(
   "../models/role.model.js"
 )(sequelize, Sequelize);
-db.costumer = require(
+db.customer = require(
   "./customer.model.js"
+)(sequelize, Sequelize);
+db.product = require(
+  "./product.model.js"
+)(sequelize, Sequelize);
+db.order = require(
+  "./order.model.js"
 )(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
   foreignKey: "roleId",
-  otherKey: "userId"
+  otherKey: "userId" //
 });
 db.user.belongsToMany(db.role, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId"
+});
+
+db.customer.belongsToMany(db.product, {
+  through: "orders",
+  foreignKey: "customerId",
+  otherKey: "productId"
+});
+db.product.belongsToMany(db.customer, {
+  through: "orders",
+  foreignKey: "productId",
+  otherKey: "customerId"
 });
 
 db.ROLES = ["user", "admin", "moderator"];

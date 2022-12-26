@@ -34,6 +34,7 @@ module.exports = function(app) {
     controller.updateCustomer
   );
 
+  
   app.delete(
     "/api/delete/customer/:id",
     [authJwt.verifyToken, authJwt.isAdmin],

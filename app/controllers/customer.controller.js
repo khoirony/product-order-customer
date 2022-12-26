@@ -1,20 +1,22 @@
 const db = require('../models');
-const Customer = db.costumer;
+const Customer = db.customer;
 
 // Create
-exports.createCustomer = (req, res) => {
-  Customer.create({
-    nama: req.body.nama,
-    email: req.body.email,
-    phone: req.body.phone,
-    address: req.body.address
-  }).then(customer => {
-    res.status(200).send({
-      message: 'data berhasil disimpan',
-      data: customer,
-    });
+exports.createCustomer = async (req, res) => {
+
+  const { nama, email, phone, address } = req.body;
+  
+  // console.info(customer);
+  const customer = await Customer.create({
+    nama, email, phone, address
+  })
+
+  return res.status(201).json({
+    status: 'success',
+    message: 'Customer created successfully',
+    data: customer
   });
-};
+}
 
 // Read all
 exports.findAllCustomer = (req, res) => {

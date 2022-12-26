@@ -31,10 +31,13 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to my web." });
 });
 
+
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/customer.routes')(app);
+require('./app/routes/product.routes')(app);
+require('./app/routes/order.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
